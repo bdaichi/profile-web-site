@@ -60,8 +60,7 @@ export default function ProfileHeadingTile(props: Props) {
               style={{
                 fontSize: fontSize,
                 marginLeft: isSp ? 10 : 80,
-                fontFamily: "TsukuARdGothic-Regular",
-                textShadow: "2px 3px 4px",
+                textShadow: "1px 2px 1.5px",
                 WebkitTextStroke: `0.5px`,
                 color: "#0066ff",
               }}
@@ -92,7 +91,7 @@ export default function ProfileHeadingTile(props: Props) {
               isDarkMode ? "rgba(0, 153, 255, 0.5)" : "rgba(0, 0, 0, 0.5)"
             }`,
             ...tileSize,
-            marginLeft: isPc ? 50 : 30,
+            marginLeft: isPc ? 50 : isSp ? 70 : 30,
             borderRadius: "15px 15px 15px 15px", //tailwindでborder-xlが効かないので,style設定してる
           }}
           onClick={() => router.push("/special_skill_detail_page")}
@@ -102,7 +101,7 @@ export default function ProfileHeadingTile(props: Props) {
             style={{
               ...contentSize,
               width: contentSize.width + 10,
-              left: isPc ? 190 : isSp ? 110 : 130,
+              left: isPc ? 190 : isSp ? 150 : 130,
               clipPath:
                 "polygon(50% 0px, 100% 0, 100% calc(100% - 0px), 0 100%)",
               borderRadius: "0px 15px 15px 0px", //tailwindでborder-rが効かないので,style設定してる
@@ -111,9 +110,8 @@ export default function ProfileHeadingTile(props: Props) {
             <p
               style={{
                 fontSize: fontSize,
-                marginRight: isSp ? 50 : 200,
-                fontFamily: "TsukuARdGothic-Regular",
-                textShadow: "2px 3px 4px",
+                marginLeft: isSp ? 120 : isPc ? 380 : 300,
+                textShadow: "1px 2px 1.5px",
                 WebkitTextStroke: `0.5px`,
                 color: "#0066ff",
               }}
@@ -162,8 +160,7 @@ export default function ProfileHeadingTile(props: Props) {
             <p
               style={{
                 fontSize: fontSize,
-                fontFamily: "TsukuARdGothic-Regular",
-                textShadow: "2px 3px 4px",
+                textShadow: "1px 2px 1.5px",
                 WebkitTextStroke: `0.5px`,
                 color: "#0066ff",
               }}
