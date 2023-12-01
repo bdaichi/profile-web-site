@@ -27,7 +27,7 @@ export default function ProfileDetailTile(props: Props) {
   return (
     <div
       className="flex justify-center w-72 mt-28 rounded-md relative shadow-2xl"
-      style={{ height: 380 }}
+      style={{ height: 396.5 }}
     >
       <div id="back_ground">
         <Image
