@@ -67,10 +67,8 @@ export default function HobbyDetailPage() {
   useEffect(() => {
     if (Number(localStorage.getItem("darkMode"))) {
       setIsDarkMode(true);
-      console.log("true", Number(localStorage.getItem("darkMode")));
     } else {
       setIsDarkMode(false);
-      console.log("false", Number(localStorage.getItem("darkMode")));
     }
   }, [isReloadDarkMode]);
 

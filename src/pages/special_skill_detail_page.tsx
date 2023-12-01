@@ -53,7 +53,6 @@ export default function SpecialSkillDetailPage() {
   ];
 
   const scrollToStory = useCallback((scrollId: string) => {
-    console.log(scrollId);
     scroller.scrollTo(scrollId, {
       duration: 800,
       delay: 0,
@@ -65,10 +64,8 @@ export default function SpecialSkillDetailPage() {
   useEffect(() => {
     if (Number(localStorage.getItem("darkMode"))) {
       setIsDarkMode(true);
-      console.log("true", Number(localStorage.getItem("darkMode")));
     } else {
       setIsDarkMode(false);
-      console.log("false", Number(localStorage.getItem("darkMode")));
     }
   }, [isReloadDarkMode]);
 
