@@ -6,6 +6,12 @@ import NavBar from "@/components/common/nav_bar";
 import Header from "@/components/common/header";
 
 import { mediaQuery, useMediaQuery } from "@/custom_hooks/useMediaQuery";
+import {
+  HinaMinchoFont,
+  RocknRollOneFont,
+  StickFont,
+  YuseiMagicFont,
+} from "@/fonts/google_fonts";
 
 type heading = {
   feature: string;
@@ -91,20 +97,15 @@ export default function SpecialSkillDetailPage() {
         </p>
       </div>
       <div
-        className="flex justify-center items-start flex-col border relative my-12"
+        className={`${HinaMinchoFont.className} flex justify-center items-start flex-col border relative my-12`}
         style={{
           height: 190,
-          width: isSp ? 400 : 500,
+          width: isSp ? 360 : 500,
           backgroundColor: "gray",
         }}
       >
         <div className="flex absolute h-10 w-24 justify-center items-center top-0 left-0 bg-white">
-          <p
-            className="text-center"
-            style={{ fontFamily: "Hiragino Mincho ProN" }}
-          >
-            目次
-          </p>
+          <p className="text-center">目次</p>
         </div>
         <div className="mt-6"></div>
         {headings.map((heading) => (
@@ -113,7 +114,6 @@ export default function SpecialSkillDetailPage() {
             className="py-1 mx-10 pr-6 text-white border-b cursor-pointer"
             style={{
               fontSize: featureFontSize,
-              fontFamily: "Hiragino Mincho ProN",
               textShadow: isDarkMode ? "1px 4px 8px" : "none",
               WebkitTextStroke: isDarkMode
                 ? `0.5px ${isDarkMode ? "white" : "black"}`
@@ -153,9 +153,9 @@ export default function SpecialSkillDetailPage() {
                 }}
               >
                 <p
+                  className={`${StickFont.className}`}
                   style={{
                     fontSize: featureFontSize,
-                    fontFamily: "Wawati SC",
                     textShadow: isDarkMode ? "1px 4px 8px" : "none",
                     WebkitTextStroke: `0.5px ${isDarkMode ? "white" : "black"}`,
                   }}
@@ -166,10 +166,9 @@ export default function SpecialSkillDetailPage() {
                   }`}
                 >
                   <p
-                    className="font-bold py-2"
+                    className={`${RocknRollOneFont.className} py-2`}
                     style={{
                       fontSize: synopsisFontSize,
-                      fontFamily: "Hannotate SC",
                       textShadow: isDarkMode ? "1px 1px 2px" : "none",
                       WebkitTextStroke: `0.5px ${
                         isDarkMode ? "white" : "black"
@@ -180,12 +179,11 @@ export default function SpecialSkillDetailPage() {
                 <div>
                   {viewHeadding == heading.feature ? (
                     <p
-                      className="m-4 tracking-wider"
+                      className={`${YuseiMagicFont.className} m-4 tracking-wider`}
                       style={{
                         whiteSpace: "pre-wrap",
                         fontSize: summaryFontSize,
-                        fontFamily: "TsukuARdGothic-Regular",
-                        textShadow: isDarkMode ? "2px 5px 8px" : "none",
+                        textShadow: isDarkMode ? "1px 1px 2px" : "none",
                         WebkitTextStroke: `0.5px ${
                           isDarkMode ? "white" : "black"
                         }`,
