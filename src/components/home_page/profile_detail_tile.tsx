@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import { mediaQuery, useMediaQuery } from "@/custom_hooks/useMediaQuery";
 import Image from "next/image";
+import { KiwiMaruFont } from "@/fonts/google_fonts";
 
 type Props = {
   isDarkMode: boolean;
@@ -26,7 +27,7 @@ export default function ProfileDetailTile(props: Props) {
 
   return (
     <div
-      className="flex justify-center w-72 mt-28 rounded-md relative shadow-2xl"
+      className={`${KiwiMaruFont.className} flex justify-center w-72 mt-28 rounded-md relative shadow-2xl`}
       style={{ height: 396.5 }}
     >
       <div id="back_ground">
@@ -46,7 +47,6 @@ export default function ProfileDetailTile(props: Props) {
           isPc ? "top-0" : "top-24"
         } ${isDarkMode ? "text-white" : "text-black"}`}
         style={{
-          fontFamily: "筑紫A丸ゴシック",
           WebkitTextStroke: isDarkMode ? "0.4px white" : undefined,
         }}
       >
