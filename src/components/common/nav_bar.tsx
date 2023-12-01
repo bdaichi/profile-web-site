@@ -6,7 +6,7 @@ import Brightness5OutlinedIcon from "@mui/icons-material/Brightness5Outlined";
 import CssBaseline from "@mui/material/CssBaseline";
 import { useRouter } from "next/router";
 import { Dispatch, SetStateAction, useEffect } from "react";
-import { KiwiMaru } from "@/fonts/google_fonts";
+import { KiwiMaruFont } from "@/fonts/google_fonts";
 
 type Props = {
   isReloadDarkMode: boolean;
@@ -51,7 +51,7 @@ export default function NavBar(props: Props) {
         >
           <CssBaseline />
           <div
-            className={`${KiwiMaru.className} flex felx-row flex-wrap justify-center text-4xl tracking-widest md:my-8`}
+            className={`${KiwiMaruFont.className} flex felx-row flex-wrap justify-center text-4xl tracking-widest md:my-8`}
             style={{
               textShadow: "1px 8px 5px",
               WebkitTextStroke: `0.5px ${props.isDarkMode ? "white" : "black"}`,
