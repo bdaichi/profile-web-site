@@ -6,6 +6,13 @@ import NavBar from "@/components/common/nav_bar";
 import Header from "@/components/common/header";
 
 import { mediaQuery, useMediaQuery } from "@/custom_hooks/useMediaQuery";
+import {
+  HinaMinchoFont,
+  KaiseiDecolFont,
+  KiwiMaruFont,
+  ReggaeOneFont,
+  StickFont,
+} from "@/fonts/google_fonts";
 
 type heading = {
   feature: string;
@@ -33,7 +40,7 @@ export default function HobbyDetailPage() {
       synopsis:
         "京アニ大好きです！全作品見てます！！ホント作画がレベチですよね...数十年前のアニメとは思えないほどに作画が安定して、めっちゃ綺麗であったかくて...そんな京アニ作品の中でも好きなのが下記になります！",
       summary:
-        "・境界の彼方\nブルーレイBOX所持、10週以上してます、メガネをかけた栗山さんが大好きです！\n・ヴァイオレット・エヴァーガーデン\nブルーレイ全巻持ってます！ポスターもアホほど持ってます！カードケースも使ってます！ガチ泣きします\n・CLANNAD\nマジ人生...\n・フルメタル・パニック！ \nそうすけがめっちゃ面白い、ツボ入りすぎてずっと笑える\n・小林さんちのメイドラゴン\n小林さんに一途なトールちゃんがめっちゃほんとに可愛い！！！\n・響け！ユーフォニアム\n初めてみた時作画に驚いた、レベル高すぎ...ストーリーも熱い泣ける \n・free\n青春！こんな最高な仲間がいる部活最高だろうなぁ...マジで泣ける、てか水の作画エグすぎ\n・けいおん\n面白い！！！ギターをやりたくなる...\n・日常\nヒャダインの曲が好き、めっちゃアホで腹筋崩壊する\n・中二病でも恋がしたい\n六花ちゃんが可愛すぎて、ほんとに無理、マジ尊い...\n・甘城ブリリアントパーク\nかなり振り切ったギャグがおもしろい、コロッケうまそう",
+        "・境界の彼方\nブルーレイBOX所持、10週以上してます、メガネをかけた栗山さんが大好きです！\n・ヴァイオレット・エヴァーガーデン\nブルーレイ全巻持ってます！ポスターもアホほど持ってます！カードケースも使ってます！ガチ泣きします\n・CLANNAD\nマジ人生...\n・フルメタル・パニック！ \nそうすけがめっちゃ面白い！毎話爆笑！\n・小林さんちのメイドラゴン\n小林さんに一途なトールちゃんがめっちゃほんとに可愛い！！！\n・響け！ユーフォニアム\n初めてみた時作画に驚いた、レベル高すぎ...ストーリーも熱い泣ける \n・free\n青春！こんな最高な仲間がいる部活最高だろうなぁ...マジで泣ける、てか水の作画エグすぎ\n・けいおん\n面白い！！！ギターをやりたくなる...\n・日常\nヒャダインの曲が好き、めっちゃアホで腹筋崩壊する\n・中二病でも恋がしたい\n六花ちゃんが可愛すぎて、ほんとに無理、マジ尊い...\n・甘城ブリリアントパーク\nかなり振り切ったギャグがおもしろい、コロッケうまそう",
       anmationHeight: [190, 750],
     },
     {
@@ -100,20 +107,15 @@ export default function HobbyDetailPage() {
         </p>
       </div>
       <div
-        className="flex justify-center items-start flex-col border relative my-12"
+        className={`${HinaMinchoFont.className} flex justify-center items-start flex-col border relative my-12`}
         style={{
           height: 190,
-          width: isSp ? 400 : 500,
+          width: isSp ? 300 : 400,
           backgroundColor: "gray",
         }}
       >
         <div className="flex absolute h-10 w-24 justify-center items-center top-0 left-0 bg-white">
-          <p
-            className="text-center"
-            style={{ fontFamily: "Hiragino Mincho ProN" }}
-          >
-            目次
-          </p>
+          <p className="text-center">目次</p>
         </div>
         <div className="mt-6"></div>
         {headings.map((heading) => (
@@ -122,7 +124,7 @@ export default function HobbyDetailPage() {
             className="py-1 mx-10 pr-6 text-white border-b cursor-pointer"
             style={{
               fontSize: featureFontSize,
-              fontFamily: "Hiragino Mincho ProN",
+
               textShadow: isDarkMode ? "1px 4px 8px" : "none",
               WebkitTextStroke: isDarkMode
                 ? `0.5px ${isDarkMode ? "white" : "black"}`
@@ -135,10 +137,10 @@ export default function HobbyDetailPage() {
         ))}
       </div>
       <p
-        className={`${isSp ? "mx-4" : "mx-32"} ${
+        className={`${KiwiMaruFont.className} ${isSp ? "mx-4" : "mx-32"} ${
           isSp ? "text-base" : "text-xl"
         } text-center text-red-500`}
-        style={{ fontFamily: "TsukuARdGothic-Regular", whiteSpace: "pre-wrap" }}
+        style={{ whiteSpace: "pre-wrap" }}
       >
         {
           "アニメなどに興味のない方は飛ばしてください\nなんか楽しそうだなこいつ笑って感じで見ていただけると幸いです。\nでは語ります！！！"
@@ -172,9 +174,9 @@ export default function HobbyDetailPage() {
                 }}
               >
                 <p
+                  className={`${KaiseiDecolFont.className}`}
                   style={{
                     fontSize: featureFontSize,
-                    fontFamily: "HanziPen TC",
                     textShadow: isDarkMode ? "1px 4px 8px" : "none",
                     WebkitTextStroke: `0.5px ${isDarkMode ? "white" : "black"}`,
                   }}
@@ -185,10 +187,9 @@ export default function HobbyDetailPage() {
                   }`}
                 >
                   <p
-                    className="font-bold py-2"
+                    className={`${StickFont.className} py-2`}
                     style={{
                       fontSize: synopsisFontSize,
-                      fontFamily: "Hannotate SC",
                       textShadow: isDarkMode ? "1px 1px 2px" : "none",
                       WebkitTextStroke: `0.5px ${
                         isDarkMode ? "white" : "black"
@@ -199,12 +200,11 @@ export default function HobbyDetailPage() {
                 <div>
                   {viewHeadding == heading.feature ? (
                     <p
-                      className="m-4 tracking-wider"
+                      className={`${ReggaeOneFont.className} m-4 tracking-wider`}
                       style={{
                         whiteSpace: "pre-wrap",
                         fontSize: summaryFontSize,
-                        fontFamily: "TsukuARdGothic-Regular",
-                        textShadow: isDarkMode ? "2px 5px 8px" : "none",
+                        textShadow: isDarkMode ? "1px 1px 2px" : "none",
                         WebkitTextStroke: `0.5px ${
                           isDarkMode ? "white" : "black"
                         }`,
