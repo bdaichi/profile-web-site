@@ -6,6 +6,7 @@ import NavBar from "@/components/common/nav_bar";
 import Header from "@/components/common/header";
 
 import { mediaQuery, useMediaQuery } from "@/custom_hooks/useMediaQuery";
+import { HinaMinchoFont, KosugiFont } from "@/fonts/google_fonts";
 
 type heading = {
   feature: string;
@@ -101,16 +102,15 @@ export default function ProgrammingDetailPage() {
         </p>
       </div>
       <div
-        className="flex justify-center items-start flex-col border relative my-12"
-        style={{ height: 190, width: 400, backgroundColor: "gray" }}
+        className={`${HinaMinchoFont.className} flex justify-center items-start flex-col border relative my-12`}
+        style={{
+          height: 190,
+          width: isSp ? 300 : 400,
+          backgroundColor: "gray",
+        }}
       >
         <div className="flex absolute h-10 w-24 justify-center items-center top-0 left-0 bg-white">
-          <p
-            className="text-center"
-            style={{ fontFamily: "Hiragino Mincho ProN" }}
-          >
-            目次
-          </p>
+          <p className="text-center">目次</p>
         </div>
         <div className="mt-6"></div>
         {headings.map((heading) => (
@@ -119,8 +119,8 @@ export default function ProgrammingDetailPage() {
             className="py-1 mx-10 pr-6 text-white border-b cursor-pointer"
             style={{
               fontSize: featureFontSize,
-              fontFamily: "Hiragino Mincho ProN",
-              textShadow: isDarkMode ? "1px 4px 8px" : "none",
+
+              textShadow: isDarkMode ? "1px 2px 4px" : "none",
               WebkitTextStroke: isDarkMode
                 ? `0.5px ${isDarkMode ? "white" : "black"}`
                 : undefined,
@@ -131,7 +131,11 @@ export default function ProgrammingDetailPage() {
           </li>
         ))}
       </div>
-      <div className={`${isDarkMode ? "text-white" : "text-black"}`}>
+      <div
+        className={`${KosugiFont.className} ${
+          isDarkMode ? "text-white" : "text-black"
+        }`}
+      >
         {headings.map((heading, index) => {
           return (
             <Element key={heading.feature} name={heading.scrollId}>
@@ -161,8 +165,7 @@ export default function ProgrammingDetailPage() {
                 <p
                   style={{
                     fontSize: featureFontSize,
-                    fontFamily: "Hiragino Mincho ProN",
-                    textShadow: isDarkMode ? "1px 4px 8px" : "none",
+                    textShadow: isDarkMode ? "1px 2px 4px" : "none",
                     WebkitTextStroke: `0.5px ${isDarkMode ? "white" : "black"}`,
                   }}
                 >{`${index + 1}.${heading.feature}`}</p>
@@ -175,7 +178,6 @@ export default function ProgrammingDetailPage() {
                     className="font-bold text-xl my-2"
                     style={{
                       fontSize: synopsisFontSize,
-                      fontFamily: "Hiragino Mincho ProN",
                       textShadow: isDarkMode ? "1px 1px 2px" : "none",
                       WebkitTextStroke: `0.5px ${
                         isDarkMode ? "white" : undefined
@@ -188,7 +190,6 @@ export default function ProgrammingDetailPage() {
                     className="font-bold"
                     style={{
                       fontSize: synopsisFontSize,
-                      fontFamily: "Hiragino Mincho ProN",
                       textShadow: isDarkMode ? "1px 1px 2px" : "none",
                       WebkitTextStroke: `0.5px ${
                         isDarkMode ? "white" : "black"
@@ -203,8 +204,7 @@ export default function ProgrammingDetailPage() {
                       style={{
                         whiteSpace: "pre-wrap",
                         fontSize: summaryFontSize,
-                        fontFamily: "TsukuARdGothic-Regular",
-                        textShadow: isDarkMode ? "2px 5px 8px" : "none",
+                        textShadow: isDarkMode ? "2px 2px 3px" : "none",
                         WebkitTextStroke: `0.5px ${
                           isDarkMode ? "white" : "black"
                         }`,
