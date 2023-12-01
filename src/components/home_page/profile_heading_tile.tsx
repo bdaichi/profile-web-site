@@ -122,8 +122,10 @@ export default function ProfileHeadingTile(props: Props) {
           <Image
             src={image}
             alt="designPattern01"
-            width={300}
-            height={200}
+            width="0"
+            height="0"
+            priority
+            sizes="100vw"
             style={{
               marginRight: isPc ? 120 : 100,
               ...imageSize,
