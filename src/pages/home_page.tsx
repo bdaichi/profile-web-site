@@ -138,21 +138,21 @@ export default function ProfilePage() {
         <div className={`${isSp ? "my-6" : "my-8"}`}></div>
         <ProfileHeadingTile
           designPattern={0}
-          image="programming_img.jpeg"
+          image="/programming_img.jpeg"
           text="プログラミング関連"
           isDarkMode={isDarkMode}
         />
         <div className={`${isSp ? "my-6" : "my-12"}`}></div>
         <ProfileHeadingTile
           designPattern={1}
-          image="hair_cut_img.jpg"
+          image="/hair_cut_img.jpg"
           text="特技"
           isDarkMode={isDarkMode}
         />
         <div className={`${isSp ? "my-6" : "my-12"}`}></div>
         <ProfileHeadingTile
           designPattern={2}
-          image="otaku_img.JPG"
+          image="/otaku_img.jpg"
           text="趣味"
           isDarkMode={isDarkMode}
         />

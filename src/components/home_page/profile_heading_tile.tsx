@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { mediaQuery, useMediaQuery } from "@/custom_hooks/useMediaQuery";
+import Image from "next/image";
 
 type Props = {
   designPattern: number;
@@ -68,15 +69,16 @@ export default function ProfileHeadingTile(props: Props) {
               {text}
             </p>
           </div>
-          <img
+          <Image
             src={image}
-            className={`opacity-50 shadow-2xl ${
-              isDarkMode ? "shadow-white" : "shadow-black"
-            }`}
+            alt="designPattern00"
+            width={300}
+            height={200}
             style={{
               marginLeft: isPc ? 263 : isSp ? 10 : 150,
               ...imageSize,
-              borderRadius: "0px 15px 15px 0px", //tailwindでborder-rが効かないので,style設定してる
+              opacity: 0.5,
+              borderRadius: "30px 15px 15px 0px", //tailwindでborder-rが効かないので,style設定してる
             }}
           />
         </div>
@@ -109,7 +111,7 @@ export default function ProfileHeadingTile(props: Props) {
             <p
               style={{
                 fontSize: fontSize,
-                marginLeft: isSp ? 100 : 380,
+                marginRight: isSp ? 50 : 200,
                 fontFamily: "TsukuARdGothic-Regular",
                 textShadow: "2px 3px 4px",
                 WebkitTextStroke: `0.5px`,
@@ -119,14 +121,15 @@ export default function ProfileHeadingTile(props: Props) {
               {text}
             </p>
           </div>
-          <img
+          <Image
             src={image}
-            className={`opacity-50 shadow-2xl ${
-              isDarkMode ? "shadow-white" : "shadow-black"
-            }`}
+            alt="designPattern01"
+            width={300}
+            height={200}
             style={{
               marginRight: isPc ? 120 : 100,
               ...imageSize,
+              opacity: 0.5,
               borderRadius: "15px 0px 0px 15px", //tailwindでborder-lが効かないので,style設定してる
             }}
           />
@@ -168,13 +171,14 @@ export default function ProfileHeadingTile(props: Props) {
               {text}
             </p>
           </div>
-          <img
+          <Image
             src={image}
-            className={`opacity-50 shadow-2xl ${
-              isDarkMode ? "shadow-white" : "shadow-black"
-            }`}
+            alt="designPattern02"
+            width={300}
+            height={200}
             style={{
               ...imageSize,
+              opacity: 0.5,
               borderRadius: "15px 15px 15px 15px", //tailwindでborder-xlが効かないので,style設定してる
             }}
           />
