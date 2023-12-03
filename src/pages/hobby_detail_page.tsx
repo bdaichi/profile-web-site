@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import AnimateHeight from "react-animate-height";
+import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 import { Element, scroller } from "react-scroll";
 
 import NavBar from "@/components/common/nav_bar";
@@ -7,24 +8,42 @@ import Header from "@/components/common/header";
 
 import { mediaQuery, useMediaQuery } from "@/custom_hooks/useMediaQuery";
 import {
-  HinaMinchoFont,
   KaiseiDecolFont,
   KiwiMaruFont,
   ReggaeOneFont,
   StickFont,
 } from "@/fonts/google_fonts";
+import Image from "next/image";
 
 type heading = {
   feature: string;
   scrollId: string;
   synopsis: string;
-  summary: string;
+  animetions: animation[];
   anmationHeight: number[]; //配列の0番目に通常時、1番目に押下時の高さを代入しておく
+};
+
+//アニメ情報
+type animation = {
+  title: string; //作品名
+  workImage: string; //作品画像
+  favoriteCharactor: favoriteCharactor; //推しキャラ情報
+  workHighLight: string; //作品の見どころ
+};
+
+//推しへ情報
+type favoriteCharactor = {
+  name: string;
+  nickName: string;
+  image: string;
+  birth?: string | undefined; //ニッチなキャラだと生年月日がわからない場合がある
+  messageToFavChar: string;
 };
 
 export default function HobbyDetailPage() {
   const isPc = useMediaQuery(mediaQuery.pc);
   const isSp = useMediaQuery(mediaQuery.sp);
+  const isTablet = useMediaQuery(mediaQuery.tablet);
   const [isReloadDarkMode, setIsReloadDarkMode] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [viewHeadding, setViewHeadding] = useState("");
@@ -39,19 +58,16 @@ export default function HobbyDetailPage() {
       scrollId: "iLoveVeryVeryKyotoAnimation",
       synopsis:
         "京アニ大好きです！全作品見てます！！ホント作画がレベチですよね...数十年前のアニメとは思えないほどに作画が安定して、めっちゃ綺麗であったかくて...そんな京アニ作品の中でも好きなのが下記になります！",
-      summary:
-        "・境界の彼方\nブルーレイBOX所持、10週以上してます、メガネをかけた栗山さんが大好きです！\n・ヴァイオレット・エヴァーガーデン\nブルーレイ全巻持ってます！ポスターもアホほど持ってます！カードケースも使ってます！ガチ泣きします\n・CLANNAD\nマジ人生...\n・フルメタル・パニック！ \nそうすけがめっちゃ面白い！毎話爆笑！\n・小林さんちのメイドラゴン\n小林さんに一途なトールちゃんがめっちゃほんとに可愛い！！！\n・響け！ユーフォニアム\n初めてみた時作画に驚いた、レベル高すぎ...ストーリーも熱い泣ける \n・free\n青春！こんな最高な仲間がいる部活最高だろうなぁ...マジで泣ける、てか水の作画エグすぎ\n・けいおん\n面白い！！！ギターをやりたくなる...\n・日常\nヒャダインの曲が好き、めっちゃアホで腹筋崩壊する\n・中二病でも恋がしたい\n六花ちゃんが可愛すぎて、ほんとに無理、マジ尊い...\n・甘城ブリリアントパーク\nかなり振り切ったギャグがおもしろい、コロッケうまそう",
-      anmationHeight: [190, 750],
+      animetions: kyotoAnimations,
+      anmationHeight: [190, isTablet ? 4950 : isPc ? 2900 : 6100],
     },
     {
       feature: "ラブライブ！大好き！！！",
       scrollId: "iLikeLoveLiveYes",
       synopsis:
         "ラブライブにハマったのは中学2年生の頃、学校の作文コンクールでラブライブについて熱く語っていた生徒がきっかけでラブライブ！を見ることにそして沼にハマっていったのです",
-      summary:
-        //TODO: 推しへの愛を言葉にして、追記する
-        "・推し紹介\nラブライブ！\n　東條希ちゃん\nラブライブ！サンシャイン！\n　黒澤ルビィちゃん\n虹ヶ咲学園スクールアイドル同好会\n　桜坂しずくちゃん\nラブライブ！スーパースター！\n　嵐千砂都ちゃん\n蓮ノ空女学院スクールアイドルクラブ\n　乙宗梢ちゃん",
-      anmationHeight: [160, 450],
+      animetions: loveLoiveAnimations,
+      anmationHeight: [160, isTablet ? 2400 : isPc ? 1400 : 2800],
     },
   ];
 
@@ -105,10 +121,10 @@ export default function HobbyDetailPage() {
         </p>
       </div>
       <div
-        className={`${HinaMinchoFont.className} flex justify-center items-start flex-col border relative my-12`}
+        className={`${KiwiMaruFont.className} flex justify-center items-start flex-col border relative my-12`}
         style={{
           height: 190,
-          width: isSp ? 300 : 400,
+          width: isSp ? 300 : 500,
           backgroundColor: "gray",
         }}
       >
@@ -122,7 +138,6 @@ export default function HobbyDetailPage() {
             className="py-1 mx-10 pr-6 text-white border-b cursor-pointer"
             style={{
               fontSize: featureFontSize,
-
               textShadow: isDarkMode ? "1px 4px 8px" : "none",
               WebkitTextStroke: isDarkMode
                 ? `0.5px ${isDarkMode ? "white" : "black"}`
@@ -145,7 +160,7 @@ export default function HobbyDetailPage() {
         }
       </p>
       <div className={`${isDarkMode ? "text-white" : "text-black"}`}>
-        {headings.map((heading, index) => {
+        {headings.map((heading) => {
           return (
             <Element key={heading.feature} name={heading.scrollId}>
               <AnimateHeight
@@ -156,33 +171,40 @@ export default function HobbyDetailPage() {
                 }
                 className={`flex flex-col ${
                   isSp ? "p-8 my-12 mx-4" : "p-8 my-12 mx-24"
-                }  rounded-3xl justify-center border-2 border-blue-400 cursor-pointer`}
+                }  rounded-3xl justify-center border-2 border-blue-400`}
                 style={{
                   boxShadow: `0px 10px 4px 4px ${
                     isDarkMode ? "rgba(0,153,255,0.5)" : "rgba(0, 0, 0, 0.5)"
                   }`,
                   overflowY: "scroll",
                 }}
-                onClick={() => {
-                  if (viewHeadding == heading.feature) {
-                    setViewHeadding("");
-                  } else {
-                    setViewHeadding(heading.feature);
-                  }
-                }}
               >
                 <p
-                  className={`${KaiseiDecolFont.className}`}
+                  className={`${KaiseiDecolFont.className} cursor-pointer`}
                   style={{
                     fontSize: featureFontSize,
                     textShadow: isDarkMode ? "1px 4px 8px" : "none",
                     WebkitTextStroke: `0.5px ${isDarkMode ? "white" : "black"}`,
                   }}
-                >{`${index + 1}.${heading.feature}`}</p>
+                  onClick={() => {
+                    if (viewHeadding == heading.feature) {
+                      setViewHeadding("");
+                    } else {
+                      setViewHeadding(heading.feature);
+                    }
+                  }}
+                >{`${heading.feature}`}</p>
                 <div
                   className={`${
                     viewHeadding == heading.feature && "border-b pb-2"
-                  }`}
+                  } cursor-pointer`}
+                  onClick={() => {
+                    if (viewHeadding == heading.feature) {
+                      setViewHeadding("");
+                    } else {
+                      setViewHeadding(heading.feature);
+                    }
+                  }}
                 >
                   <p
                     className={`${StickFont.className} py-2`}
@@ -197,19 +219,106 @@ export default function HobbyDetailPage() {
                 </div>
                 <div>
                   {viewHeadding == heading.feature ? (
-                    <p
-                      className={`${ReggaeOneFont.className} m-4 tracking-wider`}
-                      style={{
-                        whiteSpace: "pre-wrap",
-                        fontSize: summaryFontSize,
-                        textShadow: isDarkMode ? "1px 1px 2px" : "none",
-                        WebkitTextStroke: `0.5px ${
-                          isDarkMode ? "white" : "black"
-                        }`,
-                      }}
-                    >
-                      {heading.summary}
-                    </p>
+                    <div>
+                      {heading.animetions.map((animtaion) => (
+                        <div className="flex flex-col" key={animtaion.title}>
+                          <div
+                            className={`flex flex-row flex-wrap ${
+                              isSp && "items-center justify-center"
+                            } m-3 relative`}
+                            style={{ height: "auto" }}
+                          >
+                            <Image
+                              src={animtaion.workImage}
+                              alt={animtaion.title}
+                              width="0"
+                              height="0"
+                              sizes="100vw"
+                              style={{
+                                marginTop: isPc ? 15 : 0,
+                                width: 170,
+                                height: 250,
+                              }}
+                            />
+                            <div
+                              className={`${
+                                KaiseiDecolFont.className
+                              } ml-2 flex flex-col ${
+                                isSp && "items-center justify-center relative"
+                              }`}
+                              style={{
+                                width: isPc ? 700 : 200,
+                              }}
+                            >
+                              <div
+                                className={`flex flex-row items-center ${
+                                  isSp && "my-2"
+                                }`}
+                              >
+                                <p
+                                  className="flex text-center pb-1"
+                                  style={{ fontSize: featureFontSize }}
+                                >
+                                  {animtaion.title}
+                                </p>
+                              </div>
+                              <div
+                                className={`flex flex-row flex-wrap  ${
+                                  isSp && "items-center justify-center mt-2"
+                                }`}
+                              >
+                                <Image
+                                  src={animtaion.favoriteCharactor.image}
+                                  alt={animtaion.favoriteCharactor.name}
+                                  width="0"
+                                  height="0"
+                                  sizes="100vw"
+                                  style={{ width: 60, height: 90 }}
+                                />
+                                <div
+                                  className={`flex flex-col ml-2 ${
+                                    isSp && "mt-3"
+                                  }`}
+                                >
+                                  <div className="flex flex-row flex-wrap">
+                                    <p className="ml-1">
+                                      {animtaion.favoriteCharactor.nickName}
+                                    </p>
+                                    <p className="ml-1">{` (本名：${animtaion.favoriteCharactor.name})`}</p>
+                                  </div>
+                                  <p className="ml-1">{`誕生日：${
+                                    animtaion.favoriteCharactor.birth ?? "不明"
+                                  }`}</p>
+                                  <p>
+                                    {
+                                      animtaion.favoriteCharactor
+                                        .messageToFavChar
+                                    }
+                                  </p>
+                                </div>
+                              </div>
+                              <p
+                                className={`${ReggaeOneFont.className} m-4 tracking-wider`}
+                                style={{
+                                  whiteSpace: "pre-wrap",
+                                  fontSize: summaryFontSize,
+                                  textShadow: isDarkMode
+                                    ? "1px 1px 2px"
+                                    : "none",
+                                  WebkitTextStroke: `0.5px ${
+                                    isDarkMode ? "white" : "black"
+                                  }`,
+                                }}
+                              >
+                                {animtaion.workHighLight == ""
+                                  ? "comming soon..."
+                                  : animtaion.workHighLight}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   ) : (
                     <></>
                   )}
@@ -222,3 +331,178 @@ export default function HobbyDetailPage() {
     </div>
   );
 }
+
+//京アニ紹介
+const kyotoAnimations: animation[] = [
+  {
+    title: "境界の彼方",
+    workImage: "/animations/kyokai_no_kanata.JPG",
+    favoriteCharactor: {
+      name: "栗山 未来",
+      nickName: "栗山さん",
+      image: "/animations/kuriyama_mirai.jpg",
+      birth: "3月31日",
+      messageToFavChar:
+        "ゆるふわ系の髪質、あどけない顔立ち、幼さを残した胸元、まさに理想の女の子！要するにメガネをかけた栗山さんが大好きです！",
+    },
+    workHighLight: "",
+  },
+  {
+    title: "ヴァイオレット・エヴァーガーデン",
+    workImage: "/animations/violet_ever_garden.JPG",
+    favoriteCharactor: {
+      name: "ヴァイオレット・エヴァーガーデン",
+      nickName: "ヴァイオレットちゃん",
+      image: "/animations/violet.jpg",
+      birth: undefined,
+      messageToFavChar:
+        "何事にも真っすぐで正直なヴァイオレットちゃん、少佐を思う気持ちがほんとに純粋で、とても健気で...見てるこっちが浄化されそう",
+    },
+    workHighLight:
+      "愛 を少しでも知ることができる作品です。毎話泣いてました。特に5話、7話、10話、12話は号泣でした。ほんとうに感謝しか無い。見たくなってきたわ",
+  },
+  {
+    title: "CLANNAD",
+    workImage: "/animations/clannad.jpg",
+    favoriteCharactor: {
+      name: "古河 渚",
+      nickName: "なぎさちゃん",
+      image: "/animations/hurukawa_nagisa.jpg",
+      birth: "12月24日",
+      messageToFavChar:
+        "体は弱いけど、その分誰よりも心が強いと感じる、不器用だけど一生懸命で自分より他の人優先で、そしてなにより笑顔がめっちゃかわいい、もうなにあれ！？可愛すぎ、ホント無理！！！",
+    },
+    workHighLight: "人生",
+  },
+  {
+    title: "小林さんちのメイドラゴン",
+    workImage: "/animations/kobayashisanchino_maidragon.JPG",
+    favoriteCharactor: {
+      name: "トール",
+      nickName: "トールちゃん",
+      image: "/animations/torl.jpg",
+      birth: undefined,
+      messageToFavChar: "小林さんに一途なトールちゃんめっちゃかわいい！！！",
+    },
+    workHighLight: "",
+  },
+  {
+    title: "響け！ユーフォニアム",
+    workImage: "/animations/hibike_ufonium.JPG",
+    favoriteCharactor: {
+      name: "中川 夏紀",
+      nickName: "夏紀先輩",
+      image: "/animations/nakagawa_natsuki.jpg",
+      birth: "6月23日",
+      messageToFavChar:
+        "1期の10話をみて完全に心をノックアウトされました。可愛すぎじゃ",
+    },
+    workHighLight: "",
+  },
+  {
+    title: "Free!",
+    workImage: "/animations/free.JPG",
+    favoriteCharactor: {
+      name: "松岡 凛",
+      nickName: "りんちゃん",
+      image: "/animations/matsuoka_rin.jpg",
+      birth: "2月2日",
+      messageToFavChar:
+        "誰よりも仲間思いな優しいりんちゃん、泣き虫なところが面白いw",
+    },
+    workHighLight: "",
+  },
+  {
+    title: "けいおん！",
+    workImage: "/animations/k_on.jpg",
+    favoriteCharactor: {
+      name: "秋山 澪",
+      nickName: "みおたん",
+      image: "/animations/akiyama_mio.jpg",
+      birth: "1月15日",
+      messageToFavChar: "も、萌え萌えキュンでござるっぅ！！！",
+    },
+    workHighLight: "",
+  },
+  {
+    title: "中二病でも恋がしたい！",
+    workImage: "/animations/chunibyoudemo_koigashitai.JPG",
+    favoriteCharactor: {
+      name: "小鳥遊 六花",
+      nickName: "六花ちゃん",
+      image: "/animations/takanashi_rikka.jpg",
+      birth: "6月12日",
+      messageToFavChar:
+        "もうほんと可愛すぎ！！！マジで可愛い！！脳がバグるほどに可愛い！！！尊い、辛い、無理...",
+    },
+    workHighLight: "",
+  },
+  {
+    title: "日常",
+    workImage: "/animations/nichijo.JPG",
+    favoriteCharactor: {
+      name: "小木",
+      nickName: "小木",
+      image: "/animations/ogi.jpg",
+      birth: "2月16日",
+      messageToFavChar: "脇役だけど、面白すぎる",
+    },
+    workHighLight: "",
+  },
+];
+
+//ラブライブ紹介
+const loveLoiveAnimations: animation[] = [
+  {
+    title: "ラブライブ！",
+    workImage: "/animations/love_live.JPG",
+    favoriteCharactor: {
+      name: "東條希",
+      nickName: "希ちゃん",
+      image: "/animations/tojo_nozomi.jpg",
+      birth: "6月9日",
+      messageToFavChar:
+        "いやほんとに女神、マジ神聖、マジ嫁、めっちゃ優しい、みんなのことを誰よりも思ってる、いやほんとやばいわ",
+    },
+    workHighLight: "",
+  },
+  {
+    title: "ラブライブ！サンシャイン!!",
+    workImage: "/animations/love_live_sunshine.JPG",
+    favoriteCharactor: {
+      name: "黒澤ルビィ",
+      nickName: "ルビィちゃん",
+      image: "/animations/kurosawa_ruby.jpg",
+      birth: "9月21日",
+      messageToFavChar:
+        "弱気なところもあるけど、ここってところは譲らない(特にダイヤ様のことになると)そんなルビィちゃんが好き",
+    },
+    workHighLight: "",
+  },
+  {
+    title: "ラブライブ！スーパースター!!",
+    favoriteCharactor: {
+      name: "嵐千砂都",
+      nickName: "ちさとちゃん",
+      image: "/animations/arashi_chisato.jpg",
+      birth: "2月25日",
+      messageToFavChar:
+        "努力家でほんとに尊敬できる、自分にはってそういう考えを捨ててとりあえずやるって思考がほんとに好き",
+    },
+    workImage: "/animations/love_live_super_star.JPG",
+    workHighLight: "",
+  },
+  {
+    title: "蓮ノ空女学院スクールアイドルクラブ",
+    favoriteCharactor: {
+      name: "乙宗梢",
+      nickName: "梢先輩",
+      image: "/animations/otomune_kozue.PNG",
+      birth: "6月15日",
+      messageToFavChar:
+        "声が良い、流石うい様、あと画伯なところが面白い、これも流石うい様",
+    },
+    workImage: "/animations/hasunosora_school_idol.JPG",
+    workHighLight: "",
+  },
+];
