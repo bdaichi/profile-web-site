@@ -51,6 +51,9 @@ export default function HobbyDetailPage() {
   const [viewHeadding, setViewHeadding] = useState("");
   const [isVisibleSoundDescription, setIsVisibleSoundDescription] =
     useState(""); //アニメタイトル横のサウンドボタンにカーソルを合わせると、音読機能の説明文を表示 bool型にすると全部のサウンドボタンの横に説明文が表示されるので、代入するのはアニメのタイトル
+  const [playingAudio, setPlayingAudio] = useState<HTMLAudioElement | null>(
+    null
+  );
 
   const featureFontSize = isPc ? 24 : 14;
   const synopsisFontSize = isPc ? 20 : 12;
@@ -89,15 +92,23 @@ export default function HobbyDetailPage() {
     localStorage.setItem("isHideDescription", "1");
   }, []);
 
-  const playDescription = useCallback((voiceUrl: string | undefined) => {
-    const unregistedVoiceUrl =
-      Math.floor(Math.random() * 10) % 5 == 0
-        ? "/animations/voice/unregisted_ver_miyahara.wav" //1/9の確率で宮原が再生される
-        : "/animations/voice/unregisted_ver_1.wav";
-    const audioSrc = voiceUrl == undefined ? unregistedVoiceUrl : voiceUrl;
-    const audio = new Audio(audioSrc);
-    audio.play();
-  }, []);
+  const playDescription = useCallback(
+    (voiceUrl: string | undefined) => {
+      //二重再生防止🧢
+      if (playingAudio != null) {
+        playingAudio.pause();
+      }
+      const unregistedVoiceUrl =
+        Math.floor(Math.random() * 10) % 5 == 0
+          ? "/animations/voice/unregisted_ver_miyahara.wav" //1/9の確率で宮原が再生される
+          : "/animations/voice/unregisted_ver_1.wav";
+      const audioSrc = voiceUrl == undefined ? unregistedVoiceUrl : voiceUrl;
+      const audio = new Audio(audioSrc);
+      setPlayingAudio(audio);
+      audio.play();
+    },
+    [playingAudio]
+  );
 
   //useEffectとuseStateを使用して代入しないとエラーになる
   useEffect(() => {
@@ -120,7 +131,7 @@ export default function HobbyDetailPage() {
     } else {
       setIsVisibleSoundDescription(loveLoiveAnimations[0].title);
     }
-    setTimeout(() => setIsVisibleSoundDescription(""), 5000);
+    setTimeout(() => setIsVisibleSoundDescription(""), 8000);
   }, [viewHeadding]);
 
   return (
@@ -173,10 +184,11 @@ export default function HobbyDetailPage() {
             className="py-1 mx-10 pr-6 text-white border-b cursor-pointer"
             style={{
               fontSize: featureFontSize,
-              textShadow: isDarkMode ? "1px 4px 8px" : "none",
-              WebkitTextStroke: isDarkMode
-                ? `0.5px ${isDarkMode ? "white" : "black"}`
-                : undefined,
+              textShadow: isDarkMode && isPc ? "1px 4px 8px" : "none",
+              WebkitTextStroke:
+                isDarkMode && !isSp
+                  ? `0.5px ${isDarkMode ? "white" : "black"}`
+                  : undefined,
             }}
             onClick={() => scrollToStory(heading.scrollId)}
           >
@@ -218,8 +230,14 @@ export default function HobbyDetailPage() {
                   className={`${KaiseiDecolFont.className} cursor-pointer`}
                   style={{
                     fontSize: featureFontSize,
-                    textShadow: isDarkMode ? "1px 4px 8px" : "none",
-                    WebkitTextStroke: `0.5px ${isDarkMode ? "white" : "black"}`,
+                    textShadow: isDarkMode
+                      ? isSp
+                        ? "0.5px 0.5px 1px"
+                        : "1px 4px 8px"
+                      : "none",
+                    WebkitTextStroke: isSp
+                      ? undefined
+                      : `0.5px ${isDarkMode ? "white" : "black"}`,
                   }}
                   onClick={() => {
                     if (viewHeadding == heading.feature) {
@@ -245,10 +263,14 @@ export default function HobbyDetailPage() {
                     className={`${StickFont.className} py-2`}
                     style={{
                       fontSize: synopsisFontSize,
-                      textShadow: isDarkMode ? "1px 1px 2px" : "none",
-                      WebkitTextStroke: `0.5px ${
-                        isDarkMode ? "white" : "black"
-                      }`,
+                      textShadow: isDarkMode
+                        ? isSp
+                          ? "0.5px 0.5px 1px"
+                          : "1px 1px 2px"
+                        : "none",
+                      WebkitTextStroke: isSp
+                        ? undefined
+                        : `0.5px ${isDarkMode ? "white" : "black"}`,
                     }}
                   >{`・${heading.synopsis}`}</p>
                 </div>
@@ -413,11 +435,13 @@ export default function HobbyDetailPage() {
                                   whiteSpace: "pre-wrap",
                                   fontSize: summaryFontSize,
                                   textShadow: isDarkMode
-                                    ? "1px 1px 2px"
+                                    ? isSp
+                                      ? "0.5px 0.5px 1px"
+                                      : "1px 1px 2px"
                                     : "none",
-                                  WebkitTextStroke: `0.5px ${
-                                    isDarkMode ? "white" : "black"
-                                  }`,
+                                  WebkitTextStroke: isSp
+                                    ? undefined
+                                    : `0.5px ${isDarkMode ? "white" : "black"}`,
                                 }}
                               >
                                 {animtaion.workHighLight == ""
