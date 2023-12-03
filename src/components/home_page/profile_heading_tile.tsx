@@ -60,7 +60,7 @@ export default function ProfileHeadingTile(props: Props) {
               style={{
                 fontSize: fontSize,
                 marginLeft: isSp ? 10 : 80,
-                textShadow: "1px 2px 1.5px",
+                textShadow: isSp ? "0.5px 0.5px 1px" : "1px 2px 1.5px",
                 WebkitTextStroke: `0.5px`,
                 color: "#0066ff",
               }}
@@ -111,7 +111,7 @@ export default function ProfileHeadingTile(props: Props) {
               style={{
                 fontSize: fontSize,
                 marginLeft: isSp ? 120 : isPc ? 380 : 300,
-                textShadow: "1px 2px 1.5px",
+                textShadow: isSp ? "0.5px 0.5px 1px" : "1px 2px 1.5px",
                 WebkitTextStroke: `0.5px`,
                 color: "#0066ff",
               }}
@@ -162,7 +162,7 @@ export default function ProfileHeadingTile(props: Props) {
             <p
               style={{
                 fontSize: fontSize,
-                textShadow: "1px 2px 1.5px",
+                textShadow: isSp ? "0.5px 0.5px 1px" : "1px 2px 1.5px",
                 WebkitTextStroke: `0.5px`,
                 color: "#0066ff",
               }}
