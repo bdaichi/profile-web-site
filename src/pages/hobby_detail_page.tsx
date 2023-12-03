@@ -29,6 +29,7 @@ type animation = {
   workImage: string; //作品画像
   favoriteCharactor: favoriteCharactor; //推しキャラ情報
   workHighLight: string; //作品の見どころ
+  descriptionVoiceFile?: string | undefined; //声でアニメを説明
 };
 
 //推しへ情報
@@ -41,12 +42,15 @@ type favoriteCharactor = {
 };
 
 export default function HobbyDetailPage() {
+  const [isHideVoiceDescription, setIsHideVoiceDescription] = useState(0);
   const isPc = useMediaQuery(mediaQuery.pc);
   const isSp = useMediaQuery(mediaQuery.sp);
   const isTablet = useMediaQuery(mediaQuery.tablet);
   const [isReloadDarkMode, setIsReloadDarkMode] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [viewHeadding, setViewHeadding] = useState("");
+  const [isVisibleSoundDescription, setIsVisibleSoundDescription] =
+    useState(""); //アニメタイトル横のサウンドボタンにカーソルを合わせると、音読機能の説明文を表示 bool型にすると全部のサウンドボタンの横に説明文が表示されるので、代入するのはアニメのタイトル
 
   const featureFontSize = isPc ? 24 : 14;
   const synopsisFontSize = isPc ? 20 : 12;
@@ -57,7 +61,7 @@ export default function HobbyDetailPage() {
       feature: "京アニ大好き！！！",
       scrollId: "iLoveVeryVeryKyotoAnimation",
       synopsis:
-        "京アニ大好きです！全作品見てます！！ホント作画がレベチですよね...数十年前のアニメとは思えないほどに作画が安定して、めっちゃ綺麗であったかくて...そんな京アニ作品の中でも好きなのが下記になります！",
+        "京アニ大好きです！全作品見てます！！ホント作画がレベチですよね...数十年前のアニメとは思えないほどに作画が安定して、めっちゃ綺麗であったかくて...そんな京アニ作品の中でも好きな作品をいくつか紹介させていただきます！",
       animetions: kyotoAnimations,
       anmationHeight: [190, isTablet ? 4950 : isPc ? 2900 : 6100],
     },
@@ -80,6 +84,28 @@ export default function HobbyDetailPage() {
     });
   }, []);
 
+  const hideSoundDescription = useCallback(() => {
+    setIsVisibleSoundDescription("");
+    localStorage.setItem("isHideDescription", "1");
+  }, []);
+
+  const playDescription = useCallback((voiceUrl: string | undefined) => {
+    const unregistedVoiceUrl =
+      Math.floor(Math.random() * 10) % 5 == 0
+        ? "/animations/voice/unregisted_ver_miyahara.wav" //1/9の確率で宮原が再生される
+        : "/animations/voice/unregisted_ver_1.wav";
+    const audioSrc = voiceUrl == undefined ? unregistedVoiceUrl : voiceUrl;
+    const audio = new Audio(audioSrc);
+    audio.play();
+  }, []);
+
+  //useEffectとuseStateを使用して代入しないとエラーになる
+  useEffect(() => {
+    setIsHideVoiceDescription(
+      Number(localStorage.getItem("isHideDescription")) ?? 0
+    );
+  }, []);
+
   useEffect(() => {
     if (Number(localStorage.getItem("darkMode"))) {
       setIsDarkMode(true);
@@ -87,6 +113,15 @@ export default function HobbyDetailPage() {
       setIsDarkMode(false);
     }
   }, [isReloadDarkMode]);
+
+  useEffect(() => {
+    if (viewHeadding == headings[0].feature) {
+      setIsVisibleSoundDescription(kyotoAnimations[0].title);
+    } else {
+      setIsVisibleSoundDescription(loveLoiveAnimations[0].title);
+    }
+    setTimeout(() => setIsVisibleSoundDescription(""), 5000);
+  }, [viewHeadding]);
 
   return (
     <div
@@ -261,6 +296,76 @@ export default function HobbyDetailPage() {
                                 >
                                   {animtaion.title}
                                 </p>
+                                <div
+                                  //PCのカーソルを合わせたときのみ動作させる、スマホなどではクリック時に動作してしまうので、なにも処理しない
+                                  onMouseEnter={() =>
+                                    isTablet || isSp
+                                      ? {}
+                                      : setIsVisibleSoundDescription(
+                                          animtaion.title
+                                        )
+                                  }
+                                  //PCのカーソルを合わせたときのみ動作させる、スマホなどではクリック時に動作してしまうので、なにも処理しない
+                                  onMouseLeave={() =>
+                                    isTablet || isSp
+                                      ? {}
+                                      : setIsVisibleSoundDescription("")
+                                  }
+                                  className={`flex items-center justify-center border rounded-full ${
+                                    isSp ? "mx-1 w-6 h-6" : "mx-2 w-8 h-8"
+                                  } ${
+                                    animtaion.descriptionVoiceFile != null &&
+                                    "bg-white"
+                                  } cursor-pointer`}
+                                  onClick={() =>
+                                    playDescription(
+                                      animtaion.descriptionVoiceFile
+                                    )
+                                  }
+                                >
+                                  <VolumeUpIcon
+                                    style={{
+                                      height: 15,
+                                      width: 15,
+                                      color:
+                                        animtaion.descriptionVoiceFile != null
+                                          ? "blue"
+                                          : undefined,
+                                    }}
+                                  />
+                                </div>
+                                {isVisibleSoundDescription == animtaion.title &&
+                                !isHideVoiceDescription ? (
+                                  <div
+                                    className={`${
+                                      KiwiMaruFont.className
+                                    } flex absolute flex-col p-2 ${
+                                      isDarkMode ? "bg-black" : "bg-white"
+                                    } rounded-md border`}
+                                    style={{
+                                      height: "auto",
+                                      width: isSp ? 200 : 300,
+                                      left: isSp ? 0 : 200,
+                                      top: isTablet ? 260 : 50,
+                                    }}
+                                  >
+                                    <p
+                                      onClick={() =>
+                                        setIsVisibleSoundDescription("")
+                                      }
+                                    >
+                                      紹介文を読むのがめんどくさい！そんな時はサウンドボタンを押してください！(※イヤホンをつけるか、周囲に人がいないことをご確認ください)
+                                    </p>
+                                    <p
+                                      className="text-blue-600 p-1 text-center"
+                                      onClick={() => hideSoundDescription()}
+                                    >
+                                      もう表示しない　
+                                    </p>
+                                  </div>
+                                ) : (
+                                  <></>
+                                )}
                               </div>
                               <div
                                 className={`flex flex-row flex-wrap  ${
@@ -465,6 +570,7 @@ const loveLoiveAnimations: animation[] = [
         "いやほんとに女神、マジ神聖、マジ嫁、めっちゃ優しい、みんなのことを誰よりも思ってる、いやほんとやばいわ",
     },
     workHighLight: "",
+    descriptionVoiceFile: "/animations/voice/love_live.wav",
   },
   {
     title: "ラブライブ！サンシャイン!!",
