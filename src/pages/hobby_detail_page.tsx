@@ -51,6 +51,9 @@ export default function HobbyDetailPage() {
   const [viewHeadding, setViewHeadding] = useState("");
   const [isVisibleSoundDescription, setIsVisibleSoundDescription] =
     useState(""); //アニメタイトル横のサウンドボタンにカーソルを合わせると、音読機能の説明文を表示 bool型にすると全部のサウンドボタンの横に説明文が表示されるので、代入するのはアニメのタイトル
+  const [playingAudio, setPlayingAudio] = useState<HTMLAudioElement | null>(
+    null
+  );
 
   const featureFontSize = isPc ? 24 : 14;
   const synopsisFontSize = isPc ? 20 : 12;
@@ -89,15 +92,23 @@ export default function HobbyDetailPage() {
     localStorage.setItem("isHideDescription", "1");
   }, []);
 
-  const playDescription = useCallback((voiceUrl: string | undefined) => {
-    const unregistedVoiceUrl =
-      Math.floor(Math.random() * 10) % 5 == 0
-        ? "/animations/voice/unregisted_ver_miyahara.wav" //1/9の確率で宮原が再生される
-        : "/animations/voice/unregisted_ver_1.wav";
-    const audioSrc = voiceUrl == undefined ? unregistedVoiceUrl : voiceUrl;
-    const audio = new Audio(audioSrc);
-    audio.play();
-  }, []);
+  const playDescription = useCallback(
+    (voiceUrl: string | undefined) => {
+      //二重再生防止🧢
+      if (playingAudio != null) {
+        playingAudio.pause();
+      }
+      const unregistedVoiceUrl =
+        Math.floor(Math.random() * 10) % 5 == 0
+          ? "/animations/voice/unregisted_ver_miyahara.wav" //1/9の確率で宮原が再生される
+          : "/animations/voice/unregisted_ver_1.wav";
+      const audioSrc = voiceUrl == undefined ? unregistedVoiceUrl : voiceUrl;
+      const audio = new Audio(audioSrc);
+      setPlayingAudio(audio);
+      audio.play();
+    },
+    [playingAudio]
+  );
 
   //useEffectとuseStateを使用して代入しないとエラーになる
   useEffect(() => {
