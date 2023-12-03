@@ -116,11 +116,11 @@ export default function ProgrammingDetailPage() {
             className="py-1 mx-10 pr-6 text-white border-b cursor-pointer"
             style={{
               fontSize: featureFontSize,
-
-              textShadow: isDarkMode ? "1px 2px 4px" : "none",
-              WebkitTextStroke: isDarkMode
-                ? `0.5px ${isDarkMode ? "white" : "black"}`
-                : undefined,
+              textShadow: isDarkMode && isPc ? "1px 2px 4px" : "none",
+              WebkitTextStroke:
+                isDarkMode && !isSp
+                  ? `0.5px ${isDarkMode ? "white" : "black"}`
+                  : undefined,
             }}
             onClick={() => scrollToStory(heading.scrollId)}
           >
@@ -162,8 +162,14 @@ export default function ProgrammingDetailPage() {
                 <p
                   style={{
                     fontSize: featureFontSize,
-                    textShadow: isDarkMode ? "1px 2px 4px" : "none",
-                    WebkitTextStroke: `0.5px ${isDarkMode ? "white" : "black"}`,
+                    textShadow: isDarkMode
+                      ? isSp
+                        ? "0.5px 0.5px 1px"
+                        : "1px 2px 4px"
+                      : "none",
+                    WebkitTextStroke: isSp
+                      ? undefined
+                      : `0.5px ${isDarkMode ? "white" : "black"}`,
                   }}
                 >{`${index + 1}.${heading.feature}`}</p>
                 <div
@@ -175,10 +181,14 @@ export default function ProgrammingDetailPage() {
                     className="font-bold text-xl my-2"
                     style={{
                       fontSize: synopsisFontSize,
-                      textShadow: isDarkMode ? "1px 1px 2px" : "none",
-                      WebkitTextStroke: `0.5px ${
-                        isDarkMode ? "white" : undefined
-                      }`,
+                      textShadow: isDarkMode
+                        ? isSp
+                          ? "0.5px 0.5px 1px"
+                          : "1px 1px 2px"
+                        : "none",
+                      WebkitTextStroke: isSp
+                        ? undefined
+                        : `0.5px ${isDarkMode ? "white" : undefined}`,
                     }}
                   >
                     あらすじ
@@ -187,10 +197,14 @@ export default function ProgrammingDetailPage() {
                     className="font-bold"
                     style={{
                       fontSize: synopsisFontSize,
-                      textShadow: isDarkMode ? "1px 1px 2px" : "none",
-                      WebkitTextStroke: `0.5px ${
-                        isDarkMode ? "white" : "black"
-                      }`,
+                      textShadow: isDarkMode
+                        ? isSp
+                          ? "0.5px 0.5px 1px"
+                          : "1px 1px 2px"
+                        : "none",
+                      WebkitTextStroke: isSp
+                        ? undefined
+                        : `0.5px ${isDarkMode ? "white" : "black"}`,
                     }}
                   >{`・${heading.synopsis}`}</p>
                 </div>
@@ -201,10 +215,14 @@ export default function ProgrammingDetailPage() {
                       style={{
                         whiteSpace: "pre-wrap",
                         fontSize: summaryFontSize,
-                        textShadow: isDarkMode ? "2px 2px 3px" : "none",
-                        WebkitTextStroke: `0.5px ${
-                          isDarkMode ? "white" : "black"
-                        }`,
+                        textShadow: isDarkMode
+                          ? isSp
+                            ? "0.5px 0.5px 1px"
+                            : "2px 2px 3px"
+                          : "none",
+                        WebkitTextStroke: isSp
+                          ? undefined
+                          : `0.5px ${isDarkMode ? "white" : "black"}`,
                       }}
                     >
                       {heading.summary}
