@@ -5,6 +5,12 @@ import ReactPlayer from "react-player";
 import ProfileDetailTile from "@/components/home_page/profile_detail_tile";
 import ProfileHeadingTile from "@/components/home_page/profile_heading_tile";
 import { mediaQuery, useMediaQuery } from "@/custom_hooks/useMediaQuery";
+import {
+  DelaGothicOneFont,
+  HinaMinchoFont,
+  KiwiMaruFont,
+  NewTegominFont,
+} from "@/fonts/google_fonts";
 
 export default function ProfilePage() {
   const [isReloadDarkMode, setIsReloadDarkMode] = useState(true);
@@ -20,10 +26,8 @@ export default function ProfilePage() {
   useEffect(() => {
     if (Number(localStorage.getItem("darkMode"))) {
       setIsDarkMode(true);
-      console.log("true", Number(localStorage.getItem("darkMode")));
     } else {
       setIsDarkMode(false);
-      console.log("false", Number(localStorage.getItem("darkMode")));
     }
   }, [isReloadDarkMode]);
 
@@ -58,16 +62,8 @@ export default function ProfilePage() {
               isDarkMode ? "text-white" : "text-black"
             }`}
           >
-            <p
-              className="text-xl"
-              style={{ fontFamily: "Hiragino Kaku Gothic StdN" }}
-            >
-              マグマ式
-            </p>
-            <p
-              className="text-sm"
-              style={{ fontFamily: "Hiragino Mincho ProN" }}
-            >
+            <p className={`text-xl ${DelaGothicOneFont.className}`}>マグマ式</p>
+            <p className={`${HinaMinchoFont.className} text-sm`}>
               　{/* ← 空白がある */}
               ※粉チーズの中身は差し替えております、とてもマグマです(？)ご注意ください
             </p>
@@ -76,7 +72,7 @@ export default function ProfilePage() {
             <>
               {magumaFilterFlg ? (
                 <div
-                  className={`flex absolute z-10 bg-opacity-90 bg-white flex-col items-center justify-center`}
+                  className={`${NewTegominFont.className} flex absolute z-10 bg-opacity-90 bg-white flex-col items-center justify-center`}
                   style={{
                     height: isSp ? 250 : 530,
                     width: isSp ? 350 : 800,
@@ -84,24 +80,17 @@ export default function ProfilePage() {
                     left: isSp ? 10 : 0,
                   }}
                 >
-                  <p style={{ fontFamily: "Hiragino Mincho ProN" }}>
-                    半裸の変態がなにかしております。少々危険な動画です。
-                  </p>
-                  <p
-                    style={{ fontFamily: "Hiragino Mincho ProN" }}
-                    className="my-4"
-                  >
-                    閲覧しますか？
-                  </p>
+                  <p>半裸の変態がなにかしております。</p>
+                  <p>少々危険な動画です。</p>
+                  <p className="my-4">閲覧しますか？</p>
                   <div className="flex flex-row items-center">
                     {choices.map((choice) => (
                       <p
                         key={choice}
-                        className={`${
-                          isSp ? "text-xs" : "text-md"
+                        className={`${isSp ? "text-xs" : "text-md"} ${
+                          DelaGothicOneFont.className
                         } p-2 mx-3 border-b-2 border-r-2 shadow-2xl shadow-blue-600/50 rounded-md border-blue-400 cursor-pointer`}
                         style={{
-                          fontFamily: "Hiragino Kaku Gothic StdN",
                           whiteSpace: "pre-wrap",
                         }}
                         onClick={() => setMagumaFilterFlg(false)}
@@ -132,27 +121,27 @@ export default function ProfilePage() {
         </div>
       </div>
       <div
-        className="flex flex-col justify-center"
+        className={`${KiwiMaruFont.className} flex flex-col justify-center`}
         style={{ backgroundColor: isDarkMode ? "black" : "white" }}
       >
         <div className={`${isSp ? "my-6" : "my-8"}`}></div>
         <ProfileHeadingTile
           designPattern={0}
-          image="programming_img.jpeg"
+          image="/programming_img.jpeg"
           text="プログラミング関連"
           isDarkMode={isDarkMode}
         />
         <div className={`${isSp ? "my-6" : "my-12"}`}></div>
         <ProfileHeadingTile
           designPattern={1}
-          image="hair_cut_img.jpg"
+          image="/hair_cut_img.jpg"
           text="特技"
           isDarkMode={isDarkMode}
         />
         <div className={`${isSp ? "my-6" : "my-12"}`}></div>
         <ProfileHeadingTile
           designPattern={2}
-          image="otaku_img.JPG"
+          image="/otaku_img.jpg"
           text="趣味"
           isDarkMode={isDarkMode}
         />

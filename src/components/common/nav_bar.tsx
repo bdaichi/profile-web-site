@@ -6,6 +6,7 @@ import Brightness5OutlinedIcon from "@mui/icons-material/Brightness5Outlined";
 import CssBaseline from "@mui/material/CssBaseline";
 import { useRouter } from "next/router";
 import { Dispatch, SetStateAction, useEffect } from "react";
+import { KiwiMaruFont } from "@/fonts/google_fonts";
 
 type Props = {
   isReloadDarkMode: boolean;
@@ -50,16 +51,15 @@ export default function NavBar(props: Props) {
         >
           <CssBaseline />
           <div
-            className="flex felx-row flex-wrap justify-center text-4xl tracking-widest md:my-8"
+            className={`${KiwiMaruFont.className} flex felx-row flex-wrap justify-center text-4xl tracking-widest md:my-8`}
             style={{
-              fontFamily: "TsukuARdGothic-Regular",
               textShadow: "1px 8px 5px",
               WebkitTextStroke: `0.5px ${props.isDarkMode ? "white" : "black"}`,
               color: "#7fffff",
             }}
           >
             <p>別府 大地</p>
-            <p>について</p>
+            <p> について</p>
           </div>
         </div>
       </Button>

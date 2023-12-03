@@ -14,6 +14,18 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
     },
+    fontFamily: {
+      KiwiMaru: ["var(--font-KiwiMaru)"],
+      DelaGothicOne: ["var(--font-DelaGothicOne)"],
+      NewTegomin: ["var(--font-NewTegomin)"],
+      HinaMincho: ["var(--font-HinaMincho)"],
+      Kosugi: ["var(--font-Kosugi)"],
+      Stick: ["var(--font-Stick)"],
+      RocknRollOne: ["var(--font-RocknRollOne)"],
+      YuseiMagic: ["var(--font-YuseiMagic)"],
+      KaiseiDecol: ["var(--font-KaiseiDecol)"],
+      ReggaeOne: ["var(--font-ReggaeOne)"],
+    },
   },
   plugins: [],
 };

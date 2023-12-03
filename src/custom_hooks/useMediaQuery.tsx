@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 export const mediaQuery = {
   sp: "width < 602px",
-  tablet: "602px <= width < 992px",
+  tablet: "602px <= width < 1162px",
   pc: "992px <= width",
 };
 

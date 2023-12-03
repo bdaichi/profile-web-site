@@ -6,6 +6,7 @@ import NavBar from "@/components/common/nav_bar";
 import Header from "@/components/common/header";
 
 import { mediaQuery, useMediaQuery } from "@/custom_hooks/useMediaQuery";
+import { HinaMinchoFont, KosugiFont } from "@/fonts/google_fonts";
 
 type heading = {
   feature: string;
@@ -40,7 +41,7 @@ export default function ProgrammingDetailPage() {
       feature: "専門学校編",
       scrollId: "specialSchoolStory",
       synopsis:
-        "え！？長期インターンできないんですか！？どうしよう...短期インターンを探すしか、いや....専門学校1年間通ったけど、高校の復習しかしてねぇな、あと1年通うより採用されたインターンのとこで働いたほうがいいんじゃね？実務経験詰めるし、勉強にもなるし、良いことばっかじゃん！さよなら専門学校！",
+        "え！？うちの専門学校は長期インターンできないんですか！？どうしよう...短期インターンを探すしか、いや....専門学校1年間通ったけど、高校の復習しかしてねぇな、あと1年通うより採用されたインターンのとこで働いたほうがいいんじゃね？実務経験詰めるし、勉強にもなるし、良いことばっかじゃん！さよなら専門学校！",
       summary:
         "私が入った専門学校は鹿児島環境・情報専門学校です。\nここに入学した理由はプログラミングについて学べることだけでなく、給付型奨学金制度 (授業料免除、月7万円の返済不要の奨学金を国からもらえる)を受けることができたからです。\n2年制の学校なので、1年生の終わりから就職活動を開始いたしました。\n自らインターンを探し、3社ほど面接を申し込んだのですが、運良く最初に面接を受けた〇〇株式会社にて採用され、長期インターンをさせていただくことにしました。\nインターンに採用されたことを担任に伝えると、「半年以上の長期インターンは認めてないよ？できない」と言われてしまい、驚きました！一応事前に進路担当の先生に確認はしておりましたが、そのときに詳細な期間を聞いておらず、私は長期=半年以上、先生は長期=1週間くらいと認識にズレがありました...\n短期インターンを考えましたが、ふと1年間学校に通って自身の成長に繋がったのか疑問が湧きました。専門学校での授業は、高校で学んだことの復習でつまらなく感じ、家でのNext.js, React, TypeScriptのWebアプリ開発だけが楽しみだった1年間...もう1年通うよりも働いた方がいい？と考え、インターン先の社長に今の自分の考えを話し、学校側に中退した場合に奨学金は返済が必要になるかなどの確認をし、働いたほうがメリットがあると結論が出たので、専門学校を中退いたしました。\n\n転職活動編へ続く",
       anmationHeight: [240, isSp ? 800 : 750],
@@ -57,7 +58,6 @@ export default function ProgrammingDetailPage() {
   ];
 
   const scrollToStory = useCallback((scrollId: string) => {
-    console.log(scrollId);
     scroller.scrollTo(scrollId, {
       duration: 800,
       delay: 0,
@@ -69,10 +69,8 @@ export default function ProgrammingDetailPage() {
   useEffect(() => {
     if (Number(localStorage.getItem("darkMode"))) {
       setIsDarkMode(true);
-      console.log("true", Number(localStorage.getItem("darkMode")));
     } else {
       setIsDarkMode(false);
-      console.log("false", Number(localStorage.getItem("darkMode")));
     }
   }, [isReloadDarkMode]);
 
@@ -101,16 +99,15 @@ export default function ProgrammingDetailPage() {
         </p>
       </div>
       <div
-        className="flex justify-center items-start flex-col border relative my-12"
-        style={{ height: 190, width: 400, backgroundColor: "gray" }}
+        className={`${HinaMinchoFont.className} flex justify-center items-start flex-col border relative my-12`}
+        style={{
+          height: 190,
+          width: isSp ? 300 : 400,
+          backgroundColor: "gray",
+        }}
       >
         <div className="flex absolute h-10 w-24 justify-center items-center top-0 left-0 bg-white">
-          <p
-            className="text-center"
-            style={{ fontFamily: "Hiragino Mincho ProN" }}
-          >
-            目次
-          </p>
+          <p className="text-center">目次</p>
         </div>
         <div className="mt-6"></div>
         {headings.map((heading) => (
@@ -119,8 +116,8 @@ export default function ProgrammingDetailPage() {
             className="py-1 mx-10 pr-6 text-white border-b cursor-pointer"
             style={{
               fontSize: featureFontSize,
-              fontFamily: "Hiragino Mincho ProN",
-              textShadow: isDarkMode ? "1px 4px 8px" : "none",
+
+              textShadow: isDarkMode ? "1px 2px 4px" : "none",
               WebkitTextStroke: isDarkMode
                 ? `0.5px ${isDarkMode ? "white" : "black"}`
                 : undefined,
@@ -131,7 +128,11 @@ export default function ProgrammingDetailPage() {
           </li>
         ))}
       </div>
-      <div className={`${isDarkMode ? "text-white" : "text-black"}`}>
+      <div
+        className={`${KosugiFont.className} ${
+          isDarkMode ? "text-white" : "text-black"
+        }`}
+      >
         {headings.map((heading, index) => {
           return (
             <Element key={heading.feature} name={heading.scrollId}>
@@ -161,8 +162,7 @@ export default function ProgrammingDetailPage() {
                 <p
                   style={{
                     fontSize: featureFontSize,
-                    fontFamily: "Hiragino Mincho ProN",
-                    textShadow: isDarkMode ? "1px 4px 8px" : "none",
+                    textShadow: isDarkMode ? "1px 2px 4px" : "none",
                     WebkitTextStroke: `0.5px ${isDarkMode ? "white" : "black"}`,
                   }}
                 >{`${index + 1}.${heading.feature}`}</p>
@@ -175,7 +175,6 @@ export default function ProgrammingDetailPage() {
                     className="font-bold text-xl my-2"
                     style={{
                       fontSize: synopsisFontSize,
-                      fontFamily: "Hiragino Mincho ProN",
                       textShadow: isDarkMode ? "1px 1px 2px" : "none",
                       WebkitTextStroke: `0.5px ${
                         isDarkMode ? "white" : undefined
@@ -188,7 +187,6 @@ export default function ProgrammingDetailPage() {
                     className="font-bold"
                     style={{
                       fontSize: synopsisFontSize,
-                      fontFamily: "Hiragino Mincho ProN",
                       textShadow: isDarkMode ? "1px 1px 2px" : "none",
                       WebkitTextStroke: `0.5px ${
                         isDarkMode ? "white" : "black"
@@ -203,8 +201,7 @@ export default function ProgrammingDetailPage() {
                       style={{
                         whiteSpace: "pre-wrap",
                         fontSize: summaryFontSize,
-                        fontFamily: "TsukuARdGothic-Regular",
-                        textShadow: isDarkMode ? "2px 5px 8px" : "none",
+                        textShadow: isDarkMode ? "2px 2px 3px" : "none",
                         WebkitTextStroke: `0.5px ${
                           isDarkMode ? "white" : "black"
                         }`,
