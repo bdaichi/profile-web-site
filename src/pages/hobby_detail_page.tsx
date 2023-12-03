@@ -120,7 +120,7 @@ export default function HobbyDetailPage() {
     } else {
       setIsVisibleSoundDescription(loveLoiveAnimations[0].title);
     }
-    setTimeout(() => setIsVisibleSoundDescription(""), 5000);
+    setTimeout(() => setIsVisibleSoundDescription(""), 8000);
   }, [viewHeadding]);
 
   return (
