@@ -173,10 +173,11 @@ export default function HobbyDetailPage() {
             className="py-1 mx-10 pr-6 text-white border-b cursor-pointer"
             style={{
               fontSize: featureFontSize,
-              textShadow: isDarkMode ? "1px 4px 8px" : "none",
-              WebkitTextStroke: isDarkMode
-                ? `0.5px ${isDarkMode ? "white" : "black"}`
-                : undefined,
+              textShadow: isDarkMode && isPc ? "1px 4px 8px" : "none",
+              WebkitTextStroke:
+                isDarkMode && !isSp
+                  ? `0.5px ${isDarkMode ? "white" : "black"}`
+                  : undefined,
             }}
             onClick={() => scrollToStory(heading.scrollId)}
           >
@@ -218,8 +219,14 @@ export default function HobbyDetailPage() {
                   className={`${KaiseiDecolFont.className} cursor-pointer`}
                   style={{
                     fontSize: featureFontSize,
-                    textShadow: isDarkMode ? "1px 4px 8px" : "none",
-                    WebkitTextStroke: `0.5px ${isDarkMode ? "white" : "black"}`,
+                    textShadow: isDarkMode
+                      ? isSp
+                        ? "0.5px 0.5px 1px"
+                        : "1px 4px 8px"
+                      : "none",
+                    WebkitTextStroke: isSp
+                      ? undefined
+                      : `0.5px ${isDarkMode ? "white" : "black"}`,
                   }}
                   onClick={() => {
                     if (viewHeadding == heading.feature) {
@@ -245,10 +252,14 @@ export default function HobbyDetailPage() {
                     className={`${StickFont.className} py-2`}
                     style={{
                       fontSize: synopsisFontSize,
-                      textShadow: isDarkMode ? "1px 1px 2px" : "none",
-                      WebkitTextStroke: `0.5px ${
-                        isDarkMode ? "white" : "black"
-                      }`,
+                      textShadow: isDarkMode
+                        ? isSp
+                          ? "0.5px 0.5px 1px"
+                          : "1px 1px 2px"
+                        : "none",
+                      WebkitTextStroke: isSp
+                        ? undefined
+                        : `0.5px ${isDarkMode ? "white" : "black"}`,
                     }}
                   >{`・${heading.synopsis}`}</p>
                 </div>
@@ -413,11 +424,13 @@ export default function HobbyDetailPage() {
                                   whiteSpace: "pre-wrap",
                                   fontSize: summaryFontSize,
                                   textShadow: isDarkMode
-                                    ? "1px 1px 2px"
+                                    ? isSp
+                                      ? "0.5px 0.5px 1px"
+                                      : "1px 1px 2px"
                                     : "none",
-                                  WebkitTextStroke: `0.5px ${
-                                    isDarkMode ? "white" : "black"
-                                  }`,
+                                  WebkitTextStroke: isSp
+                                    ? undefined
+                                    : `0.5px ${isDarkMode ? "white" : "black"}`,
                                 }}
                               >
                                 {animtaion.workHighLight == ""
